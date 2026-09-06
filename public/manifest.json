@@ -1,0 +1,16 @@
+{
+    "name": "Bookmarks",
+    "short_name": "Bookmarks",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff",
+    "icons": [
+      {
+        "src": "/Group 4.png",
+        "sizes": "1024x1024",
+        "type": "image/png"
+      }
+    ]
+  }

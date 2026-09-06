@@ -1,78 +1,157 @@
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
+import { useEffect, useState } from "react"
+import { supabase } from "@/lib/supabase"
+import BookmarkItem from "@/components/ui/custom/BookmarkItem"
+import Title from "@/components/ui/custom/Title"
+import Head from 'next/head'
+import useBookmarkActions from "@/hooks/useBookmarkActions"
+import {
+  Trash2
+} from "lucide-react"
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+export async function getStaticProps() {
+  const { data } = await supabase
+    .from("bookmark")
+    .select("*")
+    .order("pinned", { ascending: false })
+    .order("title", { ascending: true })
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+  return {
+    props: {
+      initialData: data ?? [],
+    },
+  }
+}
 
-export default function Home() {
+export default function Bookmark({ initialData }) {
+  const [data, setData] = useState(initialData)
+  const [selectMode, setSelectMode] = useState(false)
+  const [selectedIds, setSelectedIds] = useState([])
+  const { handleDelete } = useBookmarkActions()
+
+  useEffect(() => {
+    const channel = supabase
+      .channel("rt-bookmark")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "bookmark" },
+        async () => {
+          const { data } = await supabase
+            .from("bookmark")
+            .select("*")
+            .order("pinned", { ascending: false })
+            .order("title", { ascending: true })
+
+          setData(data || [])
+        }
+      )
+      .subscribe()
+
+    return () => supabase.removeChannel(channel)
+  }, [])
+
+  const handleLongPress = (id) => {
+    setSelectMode(true)
+    setSelectedIds([id])
+  }
+
+  const handleSelect = (id) => {
+    setSelectedIds((prev) => {
+      const next = prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+      if (next.length === 0) setSelectMode(false)
+      return next
+    })
+  }
+
+  const handleDeleteSelected = async () => {
+    const confirmed = window.confirm(`${selectedIds.length} Bookmark silinecek. Emin misin ?`)
+    if (!confirmed) return
+    await Promise.all(selectedIds.map((id) => handleDelete(id)))
+    setSelectedIds([])
+    setSelectMode(false)
+  }
+
+  const pinnedItems = data
+    .filter((item) => item.pinned)
+    .sort((a, b) => a.title.localeCompare(b.title, "tr"))
+  const normalItems = data.filter((item) => !item.pinned)
+
+  const groupedData = {}
+
+  normalItems.forEach((item) => {
+    const letter = (item.title?.[0] || "#").toLocaleUpperCase("tr")
+    groupedData[letter] ??= []
+    groupedData[letter].push(item)
+  })
+
+  const sortedLetters = Object.keys(groupedData).sort((a, b) =>
+    a.localeCompare(b, "tr")
+  )
+
   return (
-    <div
-      className={`${geistSans.className} ${geistMono.className} flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black`}
+    <>
+      <Head>
+        <title>Bookmark</title>
+        <meta property="og:title" content="Bookmark" />
+        <meta property="og:image" content="https://yerimi.vercel.app/api/og" />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:image" content="https://yerimi.vercel.app/api/og" />
+      </Head>
+
+      <Title />
+
+      {selectMode && (
+  <div className="fixed top-1 right-2.5 flex gap-2 z-50">
+    <button
+      onClick={handleDeleteSelected}
+      className="p-1.5 px-3.5 items-center rounded-lg h-fit text-red-500 bg-red-100 border-1 border-red-300 font-semibold"
     >
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the index.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs/pages/getting-started?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+          <Trash2 size={18}/>
+
+    </button>
+  </div>
+)}
+
+      <div className="m-3 flex flex-col gap-4">
+        {pinnedItems.length > 0 && (
+          <div className="flex flex-col gap-2">
+            <span className="font-semibold text-[16px] pt-8 text-[#ff5d26]">
+              Pinned
+            </span>
+
+            {pinnedItems.map((item) => (
+              <BookmarkItem
+                key={item.id}
+                item={item}
+                selectMode={selectMode}
+                selected={selectedIds.includes(item.id)}
+                onLongPress={() => handleLongPress(item.id)}
+                onSelect={() => handleSelect(item.id)}
+              />
+            ))}
+          </div>
+        )}
+
+        {sortedLetters.map((letter) => (
+          <div key={letter} className="flex flex-col gap-2">
+            <span className="font-semibold text-zinc-400 pl-1">
+              {letter}
+            </span>
+
+            {groupedData[letter].map((item) => (
+              <BookmarkItem
+                key={item.id}
+                item={item}
+                selectMode={selectMode}
+                selected={selectedIds.includes(item.id)}
+                onLongPress={() => handleLongPress(item.id)}
+                onSelect={() => handleSelect(item.id)}
+              />
+            ))}
+          </div>
+        ))}
+
+        <div className="h-10" />
+      </div>
+    </>
+  )
 }
