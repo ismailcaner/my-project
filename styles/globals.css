@@ -85,6 +85,7 @@ html, body {
   --color-destructive: var(--destructive);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
+  --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
   --color-muted: var(--muted);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -95,8 +96,10 @@ html, body {
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -127,6 +130,30 @@ html, body {
     --sidebar-accent-foreground: oklch(0.985 0 0);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.556 0 0);
+  }
+
+  /* Existing utility classes in the UI use fixed light colors.
+     Override them only when the user's system is in dark mode. */
+  .bg-zinc-50 {
+    background-color: oklch(0.205 0 0) !important;
+  }
+
+  .bg-zinc-100 {
+    background-color: oklch(0.269 0 0) !important;
+  }
+
+  .border-zinc-200,
+  .border-zinc-300 {
+    border-color: oklch(1 0 0 / 10%) !important;
+  }
+
+  .text-zinc-400,
+  .text-zinc-500 {
+    color: oklch(0.708 0 0) !important;
+  }
+
+  .bg-white {
+    background-color: oklch(0.145 0 0) !important;
   }
 }
 
