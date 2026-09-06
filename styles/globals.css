@@ -94,6 +94,7 @@ html, body {
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-card: var(--card);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -129,9 +130,12 @@ html, body {
     --sidebar-ring: #666666;
   }
 
-  .bg-zinc-50,
   .bg-zinc-100 {
     background-color: #2a2a2a !important;
+  }
+
+  .bg-zinc-50 {
+    background-color: #181818 !important;
   }
 
   .bg-white {
