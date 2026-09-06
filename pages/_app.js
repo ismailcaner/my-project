@@ -9,7 +9,8 @@ export default function App({ Component, pageProps }) {
     <>
       <Head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="white" />
+        <meta name="theme-color" content="#ffffff" />
+        <meta name="color-scheme" content="light dark" />
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
         <link rel="icon" href="/Group 4.png" type="image/png" sizes="32x32" />
         <link rel="icon" href="/Group 4.png" type="image/x-icon" />
