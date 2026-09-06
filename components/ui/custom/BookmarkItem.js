@@ -134,7 +134,7 @@ export default function BookmarkItem({ item, selectMode, selected, onLongPress, 
 
                 <DropdownMenuItem
                   onClick={() => handleDelete(item.id)}
-                  className="delete-menu-item p-2.5 rounded-tr-sm rounded-tl-sm h-fit text-red-500 bg-red-100 border-0 border-red-200 font-semibold grid grid-cols-[20px_1fr]"
+                  className="delete-menu-item p-2.5 rounded-tr-sm rounded-tl-sm h-fit text-red-500 bg-red-100 border-0 border-red-200 dark:bg-[#2a2a2a] dark:text-red-500 dark:border-2 dark:border-red-500 font-semibold grid grid-cols-[20px_1fr]"
                 >
                   <Trash2 color="red" />
                   Delete
