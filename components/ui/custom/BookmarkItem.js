@@ -104,10 +104,10 @@ export default function BookmarkItem({ item, selectMode, selected, onLongPress, 
                 <Menu color={item.pinned ? "#ff5d26" : "grey"} />
               </DropdownMenuTrigger>
 
-              <DropdownMenuContent align="end" className="flex flex-col gap-1 bg-[#181818]">
+              <DropdownMenuContent align="end" className="flex flex-col gap-1 bg-[#181818] dark:bg-[#181818]">
                 <DropdownMenuItem
                   onClick={() => togglePin(item)}
-                  className="p-2.5 rounded-br-sm rounded-bl-sm h-fit text-zinc-500 bg-[#2a2a2a] border-0 font-semibold grid grid-cols-[20px_1fr]"
+                  className="p-2.5 rounded-br-sm rounded-bl-sm h-fit text-zinc-500 bg-zinc-100 border-0 font-semibold grid grid-cols-[20px_1fr] dark:bg-[#2a2a2a]"
                 >
                   {item.pinned ? <PinOff size={16} /> : <Pin size={16} />}
                   {item.pinned ? "Unpin" : "Pin"}
@@ -115,7 +115,7 @@ export default function BookmarkItem({ item, selectMode, selected, onLongPress, 
 
                 <DropdownMenuItem
                   onClick={() => handleShare(item)}
-                  className="p-2.5 rounded-sm h-fit text-zinc-500 bg-[#2a2a2a] border-0 border-zinc-300 font-semibold grid grid-cols-[20px_1fr]"
+                  className="p-2.5 rounded-sm h-fit text-zinc-500 bg-zinc-100 border-0 font-semibold grid grid-cols-[20px_1fr] dark:bg-[#2a2a2a]"
                 >
                   <Share />
                   <span>Share</span>
@@ -126,7 +126,7 @@ export default function BookmarkItem({ item, selectMode, selected, onLongPress, 
                     setTitle(item.title)
                     setOpen(true)
                   }}
-                  className="p-2.5 rounded-sm h-fit text-zinc-500 bg-[#2a2a2a] border-0 border-zinc-300 font-semibold grid grid-cols-[20px_1fr]"
+                  className="p-2.5 rounded-sm h-fit text-zinc-500 bg-zinc-100 border-0 font-semibold grid grid-cols-[20px_1fr] dark:bg-[#2a2a2a]"
                 >
                   <Pencil size={16} />
                   Edit
