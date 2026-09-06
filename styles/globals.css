@@ -69,7 +69,6 @@ html, body {
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
@@ -84,7 +83,6 @@ html, body {
   --color-border: var(--border);
   --color-destructive: var(--destructive);
   --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
   --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
   --color-muted: var(--muted);
@@ -104,56 +102,50 @@ html, body {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
+    --background: #181818;
+    --foreground: #f5f5f5;
+    --card: #2a2a2a;
+    --card-foreground: #f5f5f5;
+    --popover: #2a2a2a;
+    --popover-foreground: #f5f5f5;
+    --primary: #f5f5f5;
+    --primary-foreground: #181818;
+    --secondary: #2a2a2a;
+    --secondary-foreground: #f5f5f5;
+    --muted: #2a2a2a;
+    --muted-foreground: #a3a3a3;
+    --accent: #2a2a2a;
+    --accent-foreground: #f5f5f5;
+    --border: #383838;
+    --input: #383838;
+    --ring: #666666;
+    --sidebar: #2a2a2a;
+    --sidebar-foreground: #f5f5f5;
+    --sidebar-primary: #f5f5f5;
+    --sidebar-primary-foreground: #181818;
+    --sidebar-accent: #2a2a2a;
+    --sidebar-accent-foreground: #f5f5f5;
+    --sidebar-border: #383838;
+    --sidebar-ring: #666666;
   }
 
-  /* Existing utility classes in the UI use fixed light colors.
-     Override them only when the user's system is in dark mode. */
-  .bg-zinc-50 {
-    background-color: oklch(0.205 0 0) !important;
-  }
-
+  .bg-zinc-50,
   .bg-zinc-100 {
-    background-color: oklch(0.269 0 0) !important;
+    background-color: #2a2a2a !important;
+  }
+
+  .bg-white {
+    background-color: #181818 !important;
   }
 
   .border-zinc-200,
   .border-zinc-300 {
-    border-color: oklch(1 0 0 / 10%) !important;
+    border-color: #383838 !important;
   }
 
   .text-zinc-400,
   .text-zinc-500 {
-    color: oklch(0.708 0 0) !important;
-  }
-
-  .bg-white {
-    background-color: oklch(0.145 0 0) !important;
+    color: #a3a3a3 !important;
   }
 }
 
