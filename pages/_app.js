@@ -1,9 +1,10 @@
-import '@/styles/globals.css'
-import Head from 'next/head'
+import "@/styles/globals.css"
+import Head from "next/head"
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ismailcaner.com"
+const OG_IMAGE_URL = `${SITE_URL}/api/og`
 
 export default function App({ Component, pageProps }) {
-  const ogImage = `https://yerimi.vercel.app/api/og`;
-
   return (
     <>
       <Head>
@@ -13,15 +14,15 @@ export default function App({ Component, pageProps }) {
         <link rel="icon" href="/Group 4.png" type="image/png" sizes="32x32" />
         <link rel="icon" href="/Group 4.png" type="image/x-icon" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://yerimi.vercel.app" />
+        <meta property="og:url" content={SITE_URL} />
         <meta property="og:title" content="Bookmark" />
-        <meta property="og:image" content={ogImage} />
+        <meta property="og:image" content={OG_IMAGE_URL} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://yerimi.vercel.app" />
+        <meta property="twitter:url" content={SITE_URL} />
         <meta property="twitter:title" content="Bookmark" />
-        <meta property="twitter:image" content={ogImage} />
+        <meta property="twitter:image" content={OG_IMAGE_URL} />
       </Head>
       <Component {...pageProps} />
     </>
