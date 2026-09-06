@@ -59,7 +59,7 @@ export default function BookmarkItem({ item, selectMode, selected, onLongPress, 
       className={`flex justify-between items-center p-3 rounded-xl border cursor-pointer ${
         item.pinned
           ? "border-[#ff5d26] bg-[#ff5d26]/25 text-[#ff5d26] h-17"
-          : "border-zinc-200 bg-zinc-50 h-17"
+          : "border-zinc-200 bg-zinc-100 h-17"
       }`}
       style={{
         WebkitTouchCallout: "none",
