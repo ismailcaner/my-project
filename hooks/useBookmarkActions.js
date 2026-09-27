@@ -2,10 +2,7 @@ import { supabase } from "@/lib/supabase"
 
 export default function useBookmarkActions() {
   const handleDelete = async (id) => {
-    const { error } = await supabase
-      .from("bookmark")
-      .delete()
-      .eq("id", id)
+    const { error } = await supabase.from("bookmark").delete().eq("id", id)
 
     if (error) {
       console.error("Failed to delete bookmark:", error)
@@ -29,15 +26,25 @@ export default function useBookmarkActions() {
     return { success: true }
   }
 
+  const moveToFolder = async (id, folderId) => {
+    const { error } = await supabase
+      .from("bookmark")
+      .update({ folder_id: folderId })
+      .eq("id", id)
+
+    if (error) {
+      console.error("Failed to move bookmark:", error)
+      return { success: false, error }
+    }
+
+    return { success: true }
+  }
+
   const handleShare = async (item) => {
     if (!navigator.share) return { success: false, cancelled: true }
 
     try {
-      await navigator.share({
-        title: item.title,
-        url: item.urls,
-      })
-
+      await navigator.share({ title: item.title, url: item.urls })
       return { success: true }
     } catch (error) {
       if (error?.name === "AbortError") {
@@ -50,10 +57,7 @@ export default function useBookmarkActions() {
   }
 
   const handleUpdate = async (id, fields) => {
-    const { error } = await supabase
-      .from("bookmark")
-      .update(fields)
-      .eq("id", id)
+    const { error } = await supabase.from("bookmark").update(fields).eq("id", id)
 
     if (error) {
       console.error("Failed to update bookmark:", error)
@@ -66,6 +70,7 @@ export default function useBookmarkActions() {
   return {
     handleDelete,
     togglePin,
+    moveToFolder,
     handleShare,
     handleUpdate,
   }
